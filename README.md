@@ -1,2 +1,3 @@
 # ngs
-Bioinformatics A practical Guide to Next Generation Sequencing Data Analysis
+Bioinformatics A Practical Guide to Next-Generation Sequencing Data Analysis
+The chapter codes have been added.
