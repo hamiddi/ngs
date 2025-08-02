@@ -94,7 +94,7 @@ The conda environment YAML file `environment.yml` is provided.
 
 Please cite the textbook when using this repository:
 
-> Ismail, H. D. (2025). *Bioinformatics: A Practical Guide to Next Generation Sequencing Data Analysis*. Routledge.
+> Ismail, H.D. (2023). *Bioinformatics: A Practical Guide to Next Generation Sequencing Data Analysis* (1st ed.). Chapman and Hall/CRC. https://doi.org/10.1201/9781003355205
 
 ---
 
