@@ -1,0 +1,36 @@
+name: ngs-bioinformatics
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python=3.10
+  - fastqc
+  - trimmomatic
+  - bwa
+  - bowtie2
+  - star
+  - samtools
+  - bedtools
+  - bcftools
+  - gatk4
+  - hisat2
+  - htseq
+  - featurecounts
+  - seqtk
+  - sra-tools
+  - spades
+  - blast
+  - fastp
+  - kraken2
+  - kaiju
+  - metabat2
+  - maxbin2
+  - prodigal
+  - humann
+  - numpy
+  - pandas
+  - matplotlib
+  - seaborn
+  - jupyterlab
+  - notebook
