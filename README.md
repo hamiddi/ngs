@@ -13,8 +13,7 @@ Below is a summary of the chapters covered in the book and the supplementary mat
 - Overview of DNA/RNA structure and sequencing history  
 - Introduction to Sanger and Next-Generation Sequencing (NGS)  
 - Quality control of sequencing reads (e.g., FastQC, Trimmomatic)  
-- Sample datasets: `data/reads/`  
-- Scripts: `scripts/quality_control/`  
+- Sample datasets: `data/reads/` - Scripts: `scripts/quality_control/`  
 
 ### Chapter 2: Sequence Read Alignment
 
@@ -89,6 +88,140 @@ Most examples use standard command-line tools and open-source software. Suggeste
 - Tools: FastQC, Trimmomatic, STAR, Samtools, GATK, DESeq2, MACS2, QIIME2, etc.  
 
 The conda environment YAML file `environment.yml` is provided.
+
+
+# 🧬 NGS Data Analysis: Minimum Hardware Requirements
+
+[![Built with Python](https://img.shields.io/badge/Built%20with-Python-blue.svg)](https://www.python.org/)
+[![HPC Ready](https://img.shields.io/badge/HPC%20-Optimized-green)](https://en.wikipedia.org/wiki/High-performance_computing)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+This repository provides **guidelines for minimum computational resources** (CPU cores, RAM, and storage) required for major **Next-Generation Sequencing (NGS)** workflows.  
+It is intended for researchers, system administrators, and bioinformaticians designing or scaling analysis pipelines on **workstations, HPC clusters, or cloud environments**.
+
+---
+
+## 🧩  Overview
+
+| Workflow | Description |
+|-----------|--------------|
+| **General NGS Analysis** | Standard preprocessing and alignment (FastQC, Trimmomatic, BWA, Samtools). |
+| **Genome Assembly** | De novo assembly using tools like SPAdes, MEGAHIT, or Canu. |
+| **Variant Calling** | SNP/Indel detection and annotation (BWA, GATK, DeepVariant). |
+| **RNA-Seq** | Transcript quantification and differential expression (STAR, HISAT2, DESeq2). |
+| **ChIP-Seq** | Peak calling and motif discovery (Bowtie2, MACS2). |
+| **Amplicon Metagenomics** | 16S/18S/ITS pipelines using QIIME2 or DADA2. |
+| **Shotgun Metagenomics** | Whole-metagenome assembly, binning, and annotation (MetaSPAdes, Kaiju, HUMAnN3). |
+
+---
+
+## ⚙️ Minimum Hardware Requirements
+
+### **1. General NGS Data Analysis**
+
+| Resource | Minimum | Recommended |
+|-----------|----------|-------------|
+| **CPU Cores** | 8 | 16–32 |
+| **Memory (RAM)** | 16 GB | 32–64 GB |
+| **Storage** | 500 GB | 1–2 TB SSD |
+
+---
+
+### **2. Genome Assembly**
+
+| Resource | Minimum | Recommended |
+|-----------|----------|-------------|
+| **CPU Cores** | 16 | 32–64 |
+| **Memory (RAM)** | 64 GB | 128–512 GB |
+| **Storage** | 1–5 TB | ≥10 TB |
+
+> 🧠 Assemblers like SPAdes or Canu are **memory-intensive**. SSDs and large swap partitions improve performance.
+
+---
+
+### **3. Variant Calling**
+
+| Resource | Minimum | Recommended |
+|-----------|----------|-------------|
+| **CPU Cores** | 8 | 16–32 |
+| **Memory (RAM)** | 32 GB | 64–128 GB |
+| **Storage** | 1 TB | 2–5 TB |
+
+> Pipelines: **BWA → GATK → VEP/ANNOVAR**
+
+---
+
+### **4. RNA-Seq Analysis**
+
+| Resource | Minimum | Recommended |
+|-----------|----------|-------------|
+| **CPU Cores** | 8 | 16–32 |
+| **Memory (RAM)** | 32 GB | 64 GB |
+| **Storage** | 500 GB | 1–2 TB |
+
+> For large genomes (e.g., human), **STAR** indexing alone can require ≥30 GB RAM.
+
+---
+
+### **5. ChIP-Seq Analysis**
+
+| Resource | Minimum | Recommended |
+|-----------|----------|-------------|
+| **CPU Cores** | 8 | 16 |
+| **Memory (RAM)** | 16 GB | 32–64 GB |
+| **Storage** | 500 GB | 1 TB |
+Typical workflow: **FastQC → Bowtie2 → MACS2 → motif discovery**
+
+---
+
+### **6. Amplicon-Based Metagenomics**
+
+| Resource | Minimum | Recommended |
+|-----------|----------|-------------|
+| **CPU Cores** | 8 | 16 |
+| **Memory (RAM)** | 16 GB | 32–64 GB |
+| **Storage** | 200 GB | 500 GB–1 TB |
+
+> Pipelines: **QIIME2**, **DADA2**, or **Mothur**
+
+---
+
+### **7. Shotgun Metagenomics**
+
+| Resource | Minimum | Recommended |
+|-----------|----------|-------------|
+| **CPU Cores** | 16 | 32–64 |
+| **Memory (RAM)** | 64 GB | 128–512 GB |
+| **Storage** | 2 TB | 5–10 TB |
+
+> Includes **QC → Assembly (MEGAHIT/MetaSPAdes) → Binning (MetaBAT2) → Annotation (Kaiju/HUMAnN3)**  
+> Highly storage- and memory-intensive. Use parallel file systems on HPC for optimal throughput.
+
+---
+
+## 🧠 Summary Table
+
+| Workflow | Min Cores | Min RAM | Min Storage |
+|-----------|------------|----------|--------------|
+| General NGS | 8 | 16 GB | 500 GB |
+| Genome Assembly | 16 | 64 GB | 1 TB |
+| Variant Calling | 8 | 32 GB | 1 TB |
+| RNA-Seq | 8 | 32 GB | 500 GB |
+| ChIP-Seq | 8 | 16 GB | 500 GB |
+| Amplicon Metagenomics | 8 | 16 GB | 200 GB |
+| Shotgun Metagenomics | 16 | 64 GB | 2 TB |
+
+---
+
+## 💻 Recommended System Setup
+
+| Environment | Description |
+|--------------|-------------|
+| **Workstation** | Suitable for RNA-Seq or small metagenomics; 32 cores, 128 GB RAM, 4 TB SSD. |
+| **HPC Node** | 64–128 cores, 512 GB–1 TB RAM, shared 100 TB storage. |
+| **Cloud Setup** | AWS EC2 `r6a.8xlarge` or `c6i.8xlarge`, GCP n2-highmem-64, or Azure HB-series. |
+
+---
 
 ## 📖 Citation
 
